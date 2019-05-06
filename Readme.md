@@ -8,7 +8,7 @@ This is a Gatsby Remark plugin that aims to customize the text and style of foot
 
 ## Installation
 
-With npm
+With npm:
 
 `npm install --save gatsby-remark-footnotes`
 

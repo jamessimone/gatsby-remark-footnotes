@@ -22,7 +22,7 @@ const recursivelyFormatMarkdown = (
       hast.children = hast.children.slice(0, hast.children.length - 1);
     }
 
-    //the base object returned by toHAST (for a footnote) will be <p> tag
+    //the base object returned by toHAST (for a footnote) will be a <p> tag
     //to change the style, we have to manipulate the return value
     const newHast = {
       type: `element`,
