@@ -1,11 +1,13 @@
 {
   "name": "gatsby-remark-footnotes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Customize your gatsby Remark markup footnotes",
   "main": "index.js",
   "author": "James Simone",
   "license": "MIT",
   "dependencies": {
+    "hast-util-to-html": "5.0.0",
+    "mdast-util-to-hast": "5.0.0",
     "unist-util-visit": "1.4.0"
   },
   "repository": {
