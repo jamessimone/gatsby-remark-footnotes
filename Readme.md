@@ -34,7 +34,8 @@ plugins: [
             //use if you want the Wikipedia style ^ link without an underline beneath it
             footnoteBackRefAnchorStyle: `text-decoration: none;`,
             //use "front" for Wikipedia style ^ links
-            footnoteBackRefInnerTextStartPosition: "front"
+            footnoteBackRefInnerTextStartPosition: "front",
+            useFootnoteMarkerText: false // Defaults to false
           }
         }
       ]
@@ -54,6 +55,8 @@ plugins: [
 `footnoteBackRefAnchorStyle`: As in the example above, if you use `^` you'll want to override the `text-decoration` property (and potentially other ones, like color, if that's your thing) to conform to the Wikipedia style. Can be omitted.
 
 `footnoteBackRefInnerTextStartPosition`: `front` for Wikipedia style, otherwise can be omitted.
+
+`useFootnoteMarkerText`: set to `true` to use footnote's "marker" (how the footnote is introduced between the Markdown brackets) as the footnote "heading" introducing the footnote in the actual footnote section. Markdown by default auto-numbers footnotes, regardless of how they are introduced; if you use a series of footnotes like so [^1] [^second] [^third] the footnotes will auto number to _1, 2, 3_ in the footnote sections. By setting this flag to `true`, the second and third footnotes would be introduced: `second.` and `third.`
 
 ## Considerations
 

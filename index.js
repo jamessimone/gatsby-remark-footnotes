@@ -62,12 +62,17 @@ module.exports = (
     footnoteBackRefDisplay,
     footnoteBackRefInnerText,
     footnoteBackRefInnerTextStartPosition,
-    footnoteBackRefAnchorStyle
+    footnoteBackRefAnchorStyle,
+    useFootnoteMarkerText = false
   }
 ) => {
   const footnoteBackrefs = [];
 
   visit(markdownAST, `footnoteDefinition`, backrefNode => {
+    if (useFootnoteMarkerText) {
+      backrefNode.id = backrefNode.label;
+    }
+
     footnoteBackrefs.push(backrefNode);
   });
 
@@ -92,7 +97,14 @@ module.exports = (
     `;
 
     const listItem = `
-      <li id="fn-${node.identifier}">
+    ${
+      useFootnoteMarkerText
+        ? `<span style="display: inline">${node.label}.</span>`
+        : ""
+    }
+      <li id="fn-${node.identifier}" ${
+      useFootnoteMarkerText ? `style="display:inline"` : ""
+    }>
         ${
           footnoteBackRefInnerTextStartPosition &&
           footnoteBackRefInnerTextStartPosition === "front"
@@ -100,12 +112,17 @@ module.exports = (
             : pTag + anchorTag
         }
       </li>
+      ${
+        useFootnoteMarkerText && index < footnoteBackrefs.length - 1
+          ? `<br/> <br/>`
+          : ""
+      }
     `;
 
     const openingTag = `
       <div class="footnotes">
         <hr/>
-        <ol>
+        <ol ${useFootnoteMarkerText ? `style="list-style: none;"` : ``}>
     `;
     const closingOl = `</ol></div>`;
 
