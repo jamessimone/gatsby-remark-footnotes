@@ -58,9 +58,18 @@ plugins: [
 
 `useFootnoteMarkerText`: set to `true` to use footnote's "marker" (how the footnote is introduced between the Markdown brackets) as the footnote "heading" introducing the footnote in the actual footnote section. Markdown by default auto-numbers footnotes, regardless of how they are introduced; if you use a series of footnotes like so [^1] [^second] [^third] the footnotes will auto number to _1, 2, 3_ in the footnote sections. By setting this flag to `true`, the second and third footnotes would be introduced: `second.` and `third.`
 
+## Targeting your footnotes with further CSS selectors
+
+This plugin appends `class` names to the elements it produces so that you can further stylize / override the existing CSS.
+
+- `<p>` tag: `footnote-paragraph` class
+- `<li>` tag: `footnote-list-item` class
+- `<a>` tag: `footnote-backref` class
+- (if using `useFootnoteMarkerText` config option) `<span>` tag: `footnote-marker-text` class
+
 ## Considerations
 
 This plugin removes nodes from the AST Markdown tree that `gatsby-transformer-remark` uses to otherwise massage your markdown.
-This means that _other_ functionality you might rely on from other Gatsby plugins also working on your markdown will probably not work as expected. E.G. you use `gatsby-external-link` - it's not going to pick up on anchor tags present in your footnotes. This plugin automatically adds `target="_blank" rel="noopener noreferrer` properties to your anchor tags.
+This means that _other_ functionality you might rely on from other Gatsby plugins also working on your markdown will probably not work as expected for your footnotes. E.G. you use `gatsby-external-link` - it's not going to pick up on anchor tags present in your footnotes. This plugin automatically adds `target="_blank" rel="noopener noreferrer` properties to your anchor tags.
 
 Contributions are welcome!

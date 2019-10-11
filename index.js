@@ -4,7 +4,8 @@ const visit = require("unist-util-visit");
 
 const recursivelyFormatMarkdown = (
   node,
-  footnoteBackRefPreviousElementDisplay
+  footnoteBackRefPreviousElementDisplay,
+  footnoteBackRefInnerTextStartPosition
 ) => {
   //Unfortunately for users of gatsby-external-link, it doesn't matter the order that
   //the markdown is processed, that plugin only works on links still embedded within Markdown
@@ -29,7 +30,12 @@ const recursivelyFormatMarkdown = (
       tagName: `p`,
       properties: footnoteBackRefPreviousElementDisplay
         ? {
-            style: `display:${footnoteBackRefPreviousElementDisplay};`
+            class: "footnote-paragraph",
+            style: `display:${footnoteBackRefPreviousElementDisplay}; ${
+              footnoteBackRefInnerTextStartPosition === "front"
+                ? "margin-left: 5px;"
+                : ""
+            }`
           }
         : {},
       children: hast.children
@@ -47,7 +53,8 @@ const recursivelyFormatMarkdown = (
         .map(child =>
           recursivelyFormatMarkdown(
             child,
-            footnoteBackRefPreviousElementDisplay
+            footnoteBackRefPreviousElementDisplay,
+            footnoteBackRefInnerTextStartPosition
           )
         )
         .join("")) ||
@@ -81,7 +88,8 @@ module.exports = (
     //the content of the footnote itself
     let innerText = recursivelyFormatMarkdown(
       node,
-      footnoteBackRefPreviousElementDisplay
+      footnoteBackRefPreviousElementDisplay,
+      footnoteBackRefInnerTextStartPosition
     );
 
     const pTag = innerText;
@@ -97,14 +105,14 @@ module.exports = (
     `;
 
     const listItem = `
-    ${
-      useFootnoteMarkerText
-        ? `<span style="display: inline">${node.label}.</span>`
-        : ""
-    }
-      <li id="fn-${node.identifier}" ${
+    <li class="footnote-list-item" id="fn-${node.identifier}" ${
       useFootnoteMarkerText ? `style="display:inline"` : ""
     }>
+          ${
+            useFootnoteMarkerText
+              ? `<span class="footnote-marker-text" style="display: inline">${node.label}.</span>`
+              : ""
+          }
         ${
           footnoteBackRefInnerTextStartPosition &&
           footnoteBackRefInnerTextStartPosition === "front"

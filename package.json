@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-footnotes",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Customize your gatsby Remark markup footnotes",
   "main": "index.js",
   "author": "James Simone",
