@@ -70,10 +70,23 @@ module.exports = (
     footnoteBackRefInnerText,
     footnoteBackRefInnerTextStartPosition,
     footnoteBackRefAnchorStyle,
-    useFootnoteMarkerText = false
+    useFootnoteMarkerText = false,
+    footnotesGoBelowOptions = {
+      itemFootnotesGoBelow: "heading",
+      itemValue: "Further Reading",
+      moveFootnotes: true
+    }
   }
 ) => {
   const footnoteBackrefs = [];
+  let priorNode = { empty: true };
+  if (footnotesGoBelowOptions.moveFootnotes) {
+    visit(markdownAST, footnotesGoBelowOptions.itemFootnotesGoBelow, node => {
+      if (node.children[0].value === footnotesGoBelowOptions.itemValue) {
+        priorNode = node;
+      }
+    });
+  }
 
   visit(markdownAST, `footnoteDefinition`, backrefNode => {
     if (useFootnoteMarkerText) {
@@ -137,9 +150,16 @@ module.exports = (
     let html = index === 0 ? openingTag + listItem : listItem;
     html = index === footnoteBackrefs.length - 1 ? html + closingOl : html;
 
+    if (!priorNode.empty) {
+      console.log(priorNode);
+      // priorNode.children[2] = html; TODO: yikes
+      node.value = "";
+    } else {
+      node.value = html;
+    }
+
     node.type = "html";
     node.children = undefined;
-    node.value = html;
   }
 
   return markdownAST;
