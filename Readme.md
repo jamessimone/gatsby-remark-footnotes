@@ -35,7 +35,8 @@ plugins: [
             footnoteBackRefAnchorStyle: `text-decoration: none;`,
             //use "front" for Wikipedia style ^ links
             footnoteBackRefInnerTextStartPosition: "front",
-            useFootnoteMarkerText: false // Defaults to false
+            useFootnoteMarkerText: false, // Defaults to false
+            useCustomDivider: "<hr/><strong>References:</strong>" // Defaults to <hr/>
           }
         }
       ]
@@ -57,6 +58,8 @@ plugins: [
 `footnoteBackRefInnerTextStartPosition`: `front` for Wikipedia style, otherwise can be omitted.
 
 `useFootnoteMarkerText`: set to `true` to use footnote's "marker" (how the footnote is introduced between the Markdown brackets) as the footnote "heading" introducing the footnote in the actual footnote section. Markdown by default auto-numbers footnotes, regardless of how they are introduced; if you use a series of footnotes like so [^1] [^second] [^third] the footnotes will auto number to _1, 2, 3_ in the footnote sections. By setting this flag to `true`, the second and third footnotes would be introduced: `second.` and `third.`
+
+`useCustomDivider`: defaults to `<hr/>`, can be replaced with HTML of the user's choosing. If set to `""` it will remove the horizontal rule.
 
 ## Targeting your footnotes with further CSS selectors
 

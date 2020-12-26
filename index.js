@@ -70,7 +70,8 @@ module.exports = (
     footnoteBackRefInnerText,
     footnoteBackRefInnerTextStartPosition,
     footnoteBackRefAnchorStyle,
-    useFootnoteMarkerText = false
+    useFootnoteMarkerText = false,
+    useCustomDivider
   }
 ) => {
   const footnoteBackrefs = [];
@@ -129,7 +130,7 @@ module.exports = (
 
     const openingTag = `
       <div class="footnotes">
-        <hr/>
+        ${useCustomDivider !== undefined ? useCustomDivider : `<hr/>`}
         <ol ${useFootnoteMarkerText ? `style="list-style: none;"` : ``}>
     `;
     const closingOl = `</ol></div>`;
